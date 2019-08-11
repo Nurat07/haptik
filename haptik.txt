@@ -1,0 +1,58 @@
+Q1.1  
+
+pkill -9 guniorn
+
+Q1.2  
+
+mysql> show processlist;
+
+Q1.3
+
+#!/bin/bash
+
+length=0
+
+# filelocation  : /tmp/input.json
+for line in $(cat /tmp/input.json | grep version | cut -d ':' -f 2 | tr -d '",')
+do
+    length=$(echo -n $line | wc -c)
+    if [ $length -eq 6 ]
+    then
+      echo $line
+      break
+    fi      
+done
+
+
+Q1.4
+
+#!/bin/bash
+
+sum=0
+average=0
+counter=0
+
+
+while read number
+do
+    sum=$(echo "$sum + $number" | bc)
+    counter=$(echo "$counter + 1" | bc)     
+done < "/tmp/sum.txt" #content saved in file /tmp/sum.txt
+
+#echo $sum
+#echo $counter
+average=$(echo "$sum / $counter" | bc -l )
+average_rounded=`printf "%.2f" $average`
+#echo $average
+echo $average_rounded
+
+
+Q2.
+
+#!/bin/bash
+
+docker pull wordpress
+docker run --name wordpres-site -p 8080:80 -d wordpress
+
+
+
